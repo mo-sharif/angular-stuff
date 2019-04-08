@@ -37,11 +37,11 @@ Table of contents
              * [throw](#throw) 
              * [timer](#timer)
 
-         * [Error Handling](#Error-Handling)
+         * Error Handling
              * [catch / catchError](#catch-/-catchError)
              * [retry](#retry)
 
-         * [Filtering](#Filtering)
+         * Filtering
              * [debounceTime](#debounceTime)
              * [distinctUntilChanged](#distinctUntilChanged)
              * [filter](#filter)
