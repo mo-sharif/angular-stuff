@@ -17,14 +17,16 @@ Table of contents
    * [AsyncSubject](#AsyncSubject)
    * [Commonly used RxJs Operators](#rxjs-operators)
 
-        * [Combination](#Combination)
+        * Combination
             * [Concat](#Concat)
             * [Merge](#Merge)
             * [startWith](#startWith)
-        * [Conditional](#Conditional)
+
+        * Conditional
              * [defaultIfEmpty](#defaultIfEmpty)   
              * [every](#every)
-        * [Creation](#Creation)
+
+        * Creation
              * [create](#create)
              * [empty](#empty)
              * [from](#from) 
@@ -34,18 +36,22 @@ Table of contents
              * [range](#range) 
              * [throw](#throw) 
              * [timer](#timer)
+
          * [Error Handling](#Error-Handling)
              * [catch / catchError](#catch-/-catchError)
              * [retry](#retry)
+
          * [Filtering](#Filtering)
              * [debounceTime](#debounceTime)
              * [distinctUntilChanged](#distinctUntilChanged)
              * [filter](#filter)
              * [take](#take)
              * [takeUntil](#takeUntil)
+
          * [Multicasting](#Multicasting)
              * [multicast](#multicast)
              * [share](#share)
+
          * [Transformation](#Transformation)
              * [bufferTime](#bufferTime)
              * [concatMap](#concatMap)
@@ -58,11 +64,13 @@ Table of contents
              * [reduce](#reduce)
              * [scan](#scan)
              * [switchMap](#switchMap)
+
          * [Utility](#Utility)
              * [do / tap](#do-/-tap)
              * [delay](#delay)
              * [finalize / finally](#finalize-/-finally)
              * [repeat](#repeat)
+
     * [Installation](#installation)
 
 
