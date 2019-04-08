@@ -36,22 +36,18 @@ Table of contents
              * [range](#range) 
              * [throw](#throw) 
              * [timer](#timer)
-
          * Error Handling
              * [catch / catchError](#catch-/-catchError)
              * [retry](#retry)
-
          * Filtering
              * [debounceTime](#debounceTime)
              * [distinctUntilChanged](#distinctUntilChanged)
              * [filter](#filter)
              * [take](#take)
              * [takeUntil](#takeUntil)
-
          * [Multicasting](#Multicasting)
              * [multicast](#multicast)
              * [share](#share)
-
          * [Transformation](#Transformation)
              * [bufferTime](#bufferTime)
              * [concatMap](#concatMap)
@@ -64,7 +60,6 @@ Table of contents
              * [reduce](#reduce)
              * [scan](#scan)
              * [switchMap](#switchMap)
-
          * [Utility](#Utility)
              * [do / tap](#do-/-tap)
              * [delay](#delay)
