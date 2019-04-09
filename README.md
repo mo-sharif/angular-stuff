@@ -15,6 +15,7 @@ Table of contents
 * [Multicasted Observables](#Multicasted-Observables)
 * [BehaviorSubject](#BehaviorSubject)
 * [AsyncSubject](#AsyncSubject)
+* [ReplaySubject vs AsyncSubject](#ReplaySubject-vs-AsyncSubject)
 * [Commonly used RxJs Operators](#rxjs-operators)
     * Combination
         * [Concat](#Concat)
@@ -81,15 +82,10 @@ An Observable is a source, If you want to use the data from that source, you nee
 
 There are two kind of Observables: cold and hot Observables.
 
-**Cold Observables:** These are Observables that do not emit data until you subscribe to them, basically, data does not exists until you ask for it (e.g. HTTP requests).
-
-**Hot Observables:** These Observables start emitting without caring if there is or not a subscriber waiting for data.
-Most of the time, you have to deal with cold Observables (HTTP requests), that's why you need to subscribe to them, without this subscription you only define a data source, and then never trigger the request.
-
-So let's think about Observable with a video metaphor:
-
-- A cold Observable is like a Youtube: Videos are broadcasted when you ask for it `subscribe()`.
-- A hot Observable is like regular TV : Video are broadcasted without any regard to the fact that anyone asks for it or not.
+Cold Observables | Hot Observables
+------------ | -------------
+These are Observables that do not emit data until you subscribe to them, basically, data does not exists until you ask for it (e.g. HTTP requests). | These Observables start emitting without caring if there is or not a subscriber waiting for data.
+A cold Observable is like a Youtube: Videos are broadcasted when you ask for it `subscribe()`. | A hot Observable is like regular TV : Video are broadcasted without any regard to the fact that anyone asks for it or not.
 
 **ConnectableObservable:** are Observables that emit data as soon as you call their `connect()` method. In other words, this Observable becomes hot as soon as you call the `connect()` method.
 
@@ -106,8 +102,6 @@ Every Subject is an Observable. Given a Subject, you can subscribe to it, provid
 Internally to the Subject, subscribe does not invoke a new execution that delivers values. It simply registers the given Observer in a list of Observers, similarly to how addListener usually works in other libraries and languages.
 
 Every Subject is an Observer. It is an object with the methods next(v), error(e), and complete(). To feed a new value to the Subject, just call next(theValue), and it will be multicasted to the Observers registered to listen to the Subject.
-
-The follow example shows the basic usage of an Rx.BehaviorSubject class.
 
 ```
 // Since a Subject is an Observer, this also means you may provide a Subject as the argument to the subscribe of any Observable
@@ -135,6 +129,33 @@ observable.subscribe(subject); // You can subscribe providing a Subject
 // observerA: 3
 // observerB: 3
 ```
+
+* Subject doesn't return the current value on Subscription. It triggers only on .next(value) call and return/output the value
+
+```
+var subject = new Rx.Subject();
+
+subject.next(1); //Subjects will not output this value
+
+subject.subscribe({
+  next: (v) => console.log('observerA: ' + v)
+});
+subject.subscribe({
+  next: (v) => console.log('observerB: ' + v)
+});
+
+subject.next(2);
+subject.next(3);
+
+```
+Output
+```
+observerA: 2
+observerB: 2
+observerA: 3
+observerB: 3
+```
+
 # Multicasted Observables
 
 A "multicasted Observable" passes notifications through a Subject which may have many subscribers, whereas a plain "unicast Observable" only sends notifications to a single Observer.
@@ -186,6 +207,34 @@ subject.onNext(56);
 // => Completed
 subject.onCompleted();
 ```
+* BehaviourSubject will return the initial value or the current value on Subscription
+
+```
+var subject = new Rx.BehaviorSubject(0);  // 0 is the initial value
+
+subject.subscribe({
+  next: (v) => console.log('observerA: ' + v)  // output initial value, then new values on `next` triggers
+});
+
+subject.next(1);  // output new value 1 for 'observer A'
+subject.next(2);  // output new value 2 for 'observer A', current value 2 for 'Observer B' on subscription
+
+subject.subscribe({
+  next: (v) => console.log('observerB: ' + v)  // output current value 2, then new values on `next` triggers
+});
+
+subject.next(3);
+```
+Output
+```
+observerA: 0
+observerA: 1
+observerA: 2
+observerB: 2
+observerA: 3
+observerB: 3
+```
+
 # AsyncSubject
 
 The AsyncSubject is a variant where only the last value of the Observable execution is sent to its observers, and only when the execution completes.
@@ -216,6 +265,13 @@ subject.complete();
 // observerA: 5
 // observerB: 5
 ```
+
+# ReplaySubject vs AsyncSubject
+
+
+ReplaySubject | AsyncSubject
+------------ | -------------
+ReplaySubject(1) will always replay the latest emission no matter when the observer subscribes. It can emit any number of times. | AsyncSubject ignores all emissions until the observable completes, then emits the last emitted value. It can only ever emit once (at most) and when it does, it will also complete.
 
 # RxJs Operators
 
